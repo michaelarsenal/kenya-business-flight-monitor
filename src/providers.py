@@ -205,6 +205,7 @@ class SerpApiProvider(FlightProvider):
             "adults": query.adults,
             "currency": query.currency,
             "hl": "en",
+            "sort_by": 2,  # 2 = Price
             "api_key": self.api_key,
         }
         if query.nonstop_only:
@@ -269,6 +270,7 @@ class SearchApiProvider(FlightProvider):
             "adults": query.adults,
             "currency": query.currency,
             "hl": "en",
+            "sort_by": "price",
             "api_key": self.api_key,
         }
         if query.nonstop_only:
