@@ -1,17 +1,36 @@
-# USA -> Kenya Business Class Daily Summary (2026-11-24 02:58 UTC)
+# USA -> Kenya Business Class Daily Summary (2026-11-24 03:05 UTC)
 
-- **Routes checked:** 4 (Errors: 0)
+- **Routes checked:** 8 (Errors: 0)
 - **Target budget:** <= $3,500 USD
 - **Drop alert threshold:** >= 25%
-- **New deal alerts today:** 4
+- **New deal alerts today:** 0
 
 **Best fare today:** `JFK -> NBO` on `2027-06-17` to `2027-06-28` (11d) — **$4,224.00** (Qatar Airways, 1 stop(s))
 
-## Top 4 Cheapest Business Class Fares
+## Top 8 Cheapest Business Class Fares
 
 | Route | Dates | Days | Airline | Stops | Price | Prev | Change | Lowest Ever |
 |---|---|---:|---|---:|---:|---:|---:|---:|
-| JFK->NBO | 2027-06-17 to 2027-06-28 | 11 | Qatar Airways | 1 | **$4,224** | $8,870 | -52.4% | $4,224 |
-| JFK->NBO | 2027-06-08 to 2027-06-24 | 16 | Etihad | 1 | **$4,537** | $7,370 | -38.4% | $4,537 |
-| JFK->NBO | 2027-06-08 to 2027-06-19 | 11 | Qatar Airways | 1 | **$4,601** | $6,370 | -27.8% | $4,601 |
-| JFK->NBO | 2027-06-17 to 2027-07-03 | 16 | Qatar Airways | 1 | **$4,601** | $9,870 | -53.4% | $4,601 |
+| JFK->NBO | 2027-06-17 to 2027-06-28 | 11 | Qatar Airways | 1 | **$4,224** | $4,224 | 0.0% | $4,224 |
+| JFK->NBO | 2027-06-08 to 2027-06-24 | 16 | Etihad | 1 | **$4,537** | $4,537 | 0.0% | $4,537 |
+| JFK->NBO | 2027-06-08 to 2027-06-19 | 11 | Qatar Airways | 1 | **$4,601** | $4,601 | 0.0% | $4,601 |
+| JFK->NBO | 2027-06-17 to 2027-07-03 | 16 | Qatar Airways | 1 | **$4,601** | $4,601 | 0.0% | $4,601 |
+| IAD->NBO | 2027-06-08 to 2027-06-19 | 11 | Air France | 1 | **$4,909** | — | New | $4,909 |
+| IAD->NBO | 2027-06-08 to 2027-06-24 | 16 | British Airways | 1 | **$4,972** | — | New | $4,972 |
+| IAD->NBO | 2027-06-17 to 2027-06-28 | 11 | Brussels Airlines | 1 | **$5,046** | — | New | $5,046 |
+| IAD->NBO | 2027-06-17 to 2027-07-03 | 16 | Emirates | 1 | **$5,600** | — | New | $5,600 |
+
+## Preferred Airlines (British Airways, American)
+
+| Route | Dates | Days | Airline | Stops | Price |
+|---|---|---:|---|---:|---:|
+| JFK->NBO | 2027-06-08 to 2027-06-24 | 16 | British Airways | 1 | **$4,765** |
+| JFK->NBO | 2027-06-08 to 2027-06-19 | 11 | British Airways | 1 | **$4,765** |
+| IAD->NBO | 2027-06-08 to 2027-06-24 | 16 | British Airways | 1 | **$4,972** |
+| JFK->NBO | 2027-06-17 to 2027-07-03 | 16 | British Airways | 1 | **$5,454** |
+| IAD->NBO | 2027-06-08 to 2027-06-19 | 11 | British Airways | 1 | **$5,662** |
+| IAD->NBO | 2027-06-17 to 2027-07-03 | 16 | British Airways | 1 | **$5,662** |
+| JFK->NBO | 2027-06-17 to 2027-06-28 | 11 | British Airways | 1 | **$5,722** |
+| JFK->NBO | 2027-06-08 to 2027-06-19 | 11 | American / British Airways | 1 | **$6,297** |
+| JFK->NBO | 2027-06-17 to 2027-07-03 | 16 | American / British Airways | 1 | **$6,297** |
+| IAD->NBO | 2027-06-17 to 2027-06-28 | 11 | British Airways | 1 | **$6,528** |

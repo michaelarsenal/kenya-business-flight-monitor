@@ -42,13 +42,13 @@
 <body>
   <div class="container">
     <h1>USA → Kenya Business Class Price Monitor</h1>
-    <div class="sub">June 2027 · Up to 1 stop(s) · Last Updated: 2026-11-24T02:58:14.364116+00:00</div>
+    <div class="sub">June 2027 · Up to 1 stop(s) · Last Updated: 2026-11-24T03:05:51.913135+00:00</div>
 
     <div class="kpis">
-      <div class="card"><div class="kpi-label">Active Queries</div><div class="kpi-val">4 / day</div></div>
+      <div class="card"><div class="kpi-label">Active Queries</div><div class="kpi-val">8 / day</div></div>
       <div class="card"><div class="kpi-label">Best Fare Found</div><div class="kpi-val">$4,224</div></div>
       <div class="card"><div class="kpi-label">Target Budget</div><div class="kpi-val">&le; $3,500</div></div>
-      <div class="card"><div class="kpi-label">Active Deals</div><div class="kpi-val">4</div></div>
+      <div class="card"><div class="kpi-label">Active Deals</div><div class="kpi-val">0</div></div>
     </div>
 
     <div class="card" style="margin-bottom: 20px;">
@@ -56,7 +56,8 @@
       <canvas id="trendChart" height="220"></canvas>
     </div>
 
-    <div class="card" style="overflow-x: auto;">
+    <div class="card" style="overflow-x: auto; margin-bottom: 20px;">
+      <div class="kpi-label" style="margin-bottom: 10px;">Cheapest Fares by Route &amp; Date</div>
       <table>
         <thead>
           <tr>
@@ -68,10 +69,23 @@
         <tbody id="rowsBody"></tbody>
       </table>
     </div>
+
+    <div class="card" id="prefCard" style="overflow-x: auto; display: none;">
+      <div class="kpi-label" style="margin-bottom: 10px;">British Airways &amp; American Airlines Options</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Route</th><th>Departure</th><th>Return</th><th class="num">Days</th>
+            <th>Airline</th><th class="num">Stops</th><th class="num">Price</th><th>Book</th>
+          </tr>
+        </thead>
+        <tbody id="prefBody"></tbody>
+      </table>
+    </div>
   </div>
 
   <script>
-    const DATA = {"last_run_utc": "2026-11-24T02:58:14.364116+00:00", "target_max_price_usd": 3500.0, "drop_threshold_pct": 25.0, "nonstop_only": false, "rows": [{"route": "JFK \u2192 NBO", "route_key": "JFK-NBO-2027-06-08-2027-06-19", "departure_date": "2027-06-08", "return_date": "2027-06-19", "trip_length_days": 11, "airline": "Qatar Airways", "stops": 1, "latest_price": 4601.0, "prev_price": 6370.0, "lowest_ever": 4601.0, "change_pct": -27.8, "in_budget": false, "is_drop": true, "history": [{"t": "2026-11-24", "p": 6370.0}, {"t": "2026-11-24", "p": 4601.0}], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20JFK%20on%202027-06-08%20through%202027-06-19%20business%20class"}, {"route": "JFK \u2192 NBO", "route_key": "JFK-NBO-2027-06-08-2027-06-24", "departure_date": "2027-06-08", "return_date": "2027-06-24", "trip_length_days": 16, "airline": "Etihad", "stops": 1, "latest_price": 4537.0, "prev_price": 7370.0, "lowest_ever": 4537.0, "change_pct": -38.4, "in_budget": false, "is_drop": true, "history": [{"t": "2026-11-24", "p": 7370.0}, {"t": "2026-11-24", "p": 4537.0}], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20JFK%20on%202027-06-08%20through%202027-06-24%20business%20class"}, {"route": "JFK \u2192 NBO", "route_key": "JFK-NBO-2027-06-17-2027-06-28", "departure_date": "2027-06-17", "return_date": "2027-06-28", "trip_length_days": 11, "airline": "Qatar Airways", "stops": 1, "latest_price": 4224.0, "prev_price": 8870.0, "lowest_ever": 4224.0, "change_pct": -52.4, "in_budget": false, "is_drop": true, "history": [{"t": "2026-11-24", "p": 8870.0}, {"t": "2026-11-24", "p": 4224.0}], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20JFK%20on%202027-06-17%20through%202027-06-28%20business%20class"}, {"route": "JFK \u2192 NBO", "route_key": "JFK-NBO-2027-06-17-2027-07-03", "departure_date": "2027-06-17", "return_date": "2027-07-03", "trip_length_days": 16, "airline": "Qatar Airways", "stops": 1, "latest_price": 4601.0, "prev_price": 9870.0, "lowest_ever": 4601.0, "change_pct": -53.4, "in_budget": false, "is_drop": true, "history": [{"t": "2026-11-24", "p": 9870.0}, {"t": "2026-11-24", "p": 4601.0}], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20JFK%20on%202027-06-17%20through%202027-07-03%20business%20class"}]};
+    const DATA = {"last_run_utc": "2026-11-24T03:05:51.913135+00:00", "target_max_price_usd": 3500.0, "drop_threshold_pct": 25.0, "nonstop_only": false, "preferred_airlines": ["British Airways", "American"], "rows": [{"route": "JFK \u2192 NBO", "route_key": "JFK-NBO-2027-06-08-2027-06-19", "departure_date": "2027-06-08", "return_date": "2027-06-19", "trip_length_days": 11, "airline": "Qatar Airways", "stops": 1, "latest_price": 4601.0, "prev_price": 4601.0, "lowest_ever": 4601.0, "change_pct": 0.0, "in_budget": false, "is_drop": false, "history": [{"t": "2026-11-24", "p": 6370.0}, {"t": "2026-11-24", "p": 4601.0}, {"t": "2026-11-24", "p": 4601.0}], "preferred_offers": [{"preferred": "British Airways", "airline": "British Airways", "price_usd": 4765.0, "stops": 1}, {"preferred": "American", "airline": "American / British Airways", "price_usd": 6297.0, "stops": 1}], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20JFK%20on%202027-06-08%20through%202027-06-19%20business%20class"}, {"route": "JFK \u2192 NBO", "route_key": "JFK-NBO-2027-06-08-2027-06-24", "departure_date": "2027-06-08", "return_date": "2027-06-24", "trip_length_days": 16, "airline": "Etihad", "stops": 1, "latest_price": 4537.0, "prev_price": 4537.0, "lowest_ever": 4537.0, "change_pct": 0.0, "in_budget": false, "is_drop": false, "history": [{"t": "2026-11-24", "p": 7370.0}, {"t": "2026-11-24", "p": 4537.0}, {"t": "2026-11-24", "p": 4537.0}], "preferred_offers": [{"preferred": "British Airways", "airline": "British Airways", "price_usd": 4765.0, "stops": 1}], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20JFK%20on%202027-06-08%20through%202027-06-24%20business%20class"}, {"route": "JFK \u2192 NBO", "route_key": "JFK-NBO-2027-06-17-2027-06-28", "departure_date": "2027-06-17", "return_date": "2027-06-28", "trip_length_days": 11, "airline": "Qatar Airways", "stops": 1, "latest_price": 4224.0, "prev_price": 4224.0, "lowest_ever": 4224.0, "change_pct": 0.0, "in_budget": false, "is_drop": false, "history": [{"t": "2026-11-24", "p": 8870.0}, {"t": "2026-11-24", "p": 4224.0}, {"t": "2026-11-24", "p": 4224.0}], "preferred_offers": [{"preferred": "British Airways", "airline": "British Airways", "price_usd": 5722.0, "stops": 1}], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20JFK%20on%202027-06-17%20through%202027-06-28%20business%20class"}, {"route": "JFK \u2192 NBO", "route_key": "JFK-NBO-2027-06-17-2027-07-03", "departure_date": "2027-06-17", "return_date": "2027-07-03", "trip_length_days": 16, "airline": "Qatar Airways", "stops": 1, "latest_price": 4601.0, "prev_price": 4601.0, "lowest_ever": 4601.0, "change_pct": 0.0, "in_budget": false, "is_drop": false, "history": [{"t": "2026-11-24", "p": 9870.0}, {"t": "2026-11-24", "p": 4601.0}, {"t": "2026-11-24", "p": 4601.0}], "preferred_offers": [{"preferred": "British Airways", "airline": "British Airways", "price_usd": 5454.0, "stops": 1}, {"preferred": "American", "airline": "American / British Airways", "price_usd": 6297.0, "stops": 1}], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20JFK%20on%202027-06-17%20through%202027-07-03%20business%20class"}, {"route": "IAD \u2192 NBO", "route_key": "IAD-NBO-2027-06-08-2027-06-19", "departure_date": "2027-06-08", "return_date": "2027-06-19", "trip_length_days": 11, "airline": "Air France", "stops": 1, "latest_price": 4909.0, "prev_price": null, "lowest_ever": 4909.0, "change_pct": null, "in_budget": false, "is_drop": false, "history": [{"t": "2026-11-24", "p": 4909.0}], "preferred_offers": [{"preferred": "British Airways", "airline": "British Airways", "price_usd": 5662.0, "stops": 1}], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20IAD%20on%202027-06-08%20through%202027-06-19%20business%20class"}, {"route": "IAD \u2192 NBO", "route_key": "IAD-NBO-2027-06-08-2027-06-24", "departure_date": "2027-06-08", "return_date": "2027-06-24", "trip_length_days": 16, "airline": "British Airways", "stops": 1, "latest_price": 4972.0, "prev_price": null, "lowest_ever": 4972.0, "change_pct": null, "in_budget": false, "is_drop": false, "history": [{"t": "2026-11-24", "p": 4972.0}], "preferred_offers": [{"preferred": "British Airways", "airline": "British Airways", "price_usd": 4972.0, "stops": 1}], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20IAD%20on%202027-06-08%20through%202027-06-24%20business%20class"}, {"route": "IAD \u2192 NBO", "route_key": "IAD-NBO-2027-06-17-2027-06-28", "departure_date": "2027-06-17", "return_date": "2027-06-28", "trip_length_days": 11, "airline": "Brussels Airlines", "stops": 1, "latest_price": 5046.0, "prev_price": null, "lowest_ever": 5046.0, "change_pct": null, "in_budget": false, "is_drop": false, "history": [{"t": "2026-11-24", "p": 5046.0}], "preferred_offers": [{"preferred": "British Airways", "airline": "British Airways", "price_usd": 6528.0, "stops": 1}], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20IAD%20on%202027-06-17%20through%202027-06-28%20business%20class"}, {"route": "IAD \u2192 NBO", "route_key": "IAD-NBO-2027-06-17-2027-07-03", "departure_date": "2027-06-17", "return_date": "2027-07-03", "trip_length_days": 16, "airline": "Emirates", "stops": 1, "latest_price": 5600.0, "prev_price": null, "lowest_ever": 5600.0, "change_pct": null, "in_budget": false, "is_drop": false, "history": [{"t": "2026-11-24", "p": 5600.0}], "preferred_offers": [{"preferred": "British Airways", "airline": "British Airways", "price_usd": 5662.0, "stops": 1}], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20IAD%20on%202027-06-17%20through%202027-07-03%20business%20class"}]};
     const tbody = document.getElementById("rowsBody");
     const sorted = [...DATA.rows].sort((a, b) => (a.latest_price ?? 999999) - (b.latest_price ?? 999999));
 
@@ -100,6 +114,32 @@
         <td><a href="${r.url}" target="_blank" rel="noopener">Google Flights</a></td>
       `;
       tbody.appendChild(tr);
+    }
+
+    const prefBody = document.getElementById("prefBody");
+    const prefRows = [];
+    for (const r of DATA.rows) {
+      for (const po of (r.preferred_offers || [])) {
+        prefRows.push({ ...r, po });
+      }
+    }
+    prefRows.sort((a, b) => a.po.price_usd - b.po.price_usd);
+    if (prefRows.length > 0) {
+      document.getElementById("prefCard").style.display = "block";
+      for (const item of prefRows) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><b>${item.route}</b></td>
+          <td>${item.departure_date}</td>
+          <td>${item.return_date}</td>
+          <td class="num">${item.trip_length_days}</td>
+          <td>${item.po.airline}</td>
+          <td class="num">${item.po.stops}</td>
+          <td class="num"><b>$${item.po.price_usd.toLocaleString()}</b></td>
+          <td><a href="${item.url}" target="_blank" rel="noopener">Google Flights</a></td>
+        `;
+        prefBody.appendChild(tr);
+      }
     }
 
     // Simple Canvas line chart

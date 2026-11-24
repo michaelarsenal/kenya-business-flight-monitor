@@ -1,10 +1,128 @@
 {
-  "last_run_utc": "2026-11-24T02:58:14.364116+00:00",
+  "last_run_utc": "2026-11-24T03:05:51.913135+00:00",
   "routes": {
+    "IAD-NBO-2027-06-08-2027-06-19": {
+      "departure_date": "2027-06-08",
+      "destination": "NBO",
+      "last_alerted_price_usd": null,
+      "latest_preferred_offers": [
+        {
+          "airline": "British Airways",
+          "preferred": "British Airways",
+          "price_usd": 5662.0,
+          "stops": 1
+        }
+      ],
+      "lowest_ever_usd": 4909.0,
+      "observations": [
+        {
+          "airline": "Air France",
+          "price_usd": 4909.0,
+          "provider": "searchapi",
+          "stops": 1,
+          "timestamp": "2026-11-24T03:05:51.913135+00:00"
+        }
+      ],
+      "origin": "IAD",
+      "return_date": "2027-06-19",
+      "trip_length_days": 11
+    },
+    "IAD-NBO-2027-06-08-2027-06-24": {
+      "departure_date": "2027-06-08",
+      "destination": "NBO",
+      "last_alerted_price_usd": null,
+      "latest_preferred_offers": [
+        {
+          "airline": "British Airways",
+          "preferred": "British Airways",
+          "price_usd": 4972.0,
+          "stops": 1
+        }
+      ],
+      "lowest_ever_usd": 4972.0,
+      "observations": [
+        {
+          "airline": "British Airways",
+          "price_usd": 4972.0,
+          "provider": "searchapi",
+          "stops": 1,
+          "timestamp": "2026-11-24T03:05:51.913135+00:00"
+        }
+      ],
+      "origin": "IAD",
+      "return_date": "2027-06-24",
+      "trip_length_days": 16
+    },
+    "IAD-NBO-2027-06-17-2027-06-28": {
+      "departure_date": "2027-06-17",
+      "destination": "NBO",
+      "last_alerted_price_usd": null,
+      "latest_preferred_offers": [
+        {
+          "airline": "British Airways",
+          "preferred": "British Airways",
+          "price_usd": 6528.0,
+          "stops": 1
+        }
+      ],
+      "lowest_ever_usd": 5046.0,
+      "observations": [
+        {
+          "airline": "Brussels Airlines",
+          "price_usd": 5046.0,
+          "provider": "searchapi",
+          "stops": 1,
+          "timestamp": "2026-11-24T03:05:51.913135+00:00"
+        }
+      ],
+      "origin": "IAD",
+      "return_date": "2027-06-28",
+      "trip_length_days": 11
+    },
+    "IAD-NBO-2027-06-17-2027-07-03": {
+      "departure_date": "2027-06-17",
+      "destination": "NBO",
+      "last_alerted_price_usd": null,
+      "latest_preferred_offers": [
+        {
+          "airline": "British Airways",
+          "preferred": "British Airways",
+          "price_usd": 5662.0,
+          "stops": 1
+        }
+      ],
+      "lowest_ever_usd": 5600.0,
+      "observations": [
+        {
+          "airline": "Emirates",
+          "price_usd": 5600.0,
+          "provider": "searchapi",
+          "stops": 1,
+          "timestamp": "2026-11-24T03:05:51.913135+00:00"
+        }
+      ],
+      "origin": "IAD",
+      "return_date": "2027-07-03",
+      "trip_length_days": 16
+    },
     "JFK-NBO-2027-06-08-2027-06-19": {
       "departure_date": "2027-06-08",
       "destination": "NBO",
       "last_alerted_price_usd": 4601.0,
+      "latest_preferred_offers": [
+        {
+          "airline": "British Airways",
+          "preferred": "British Airways",
+          "price_usd": 4765.0,
+          "stops": 1
+        },
+        {
+          "airline": "American / British Airways",
+          "preferred": "American",
+          "price_usd": 6297.0,
+          "stops": 1
+        }
+      ],
       "lowest_ever_usd": 4601.0,
       "observations": [
         {
@@ -20,6 +138,13 @@
           "provider": "searchapi",
           "stops": 1,
           "timestamp": "2026-11-24T02:58:14.364116+00:00"
+        },
+        {
+          "airline": "Qatar Airways",
+          "price_usd": 4601.0,
+          "provider": "searchapi",
+          "stops": 1,
+          "timestamp": "2026-11-24T03:05:51.913135+00:00"
         }
       ],
       "origin": "JFK",
@@ -30,6 +155,14 @@
       "departure_date": "2027-06-08",
       "destination": "NBO",
       "last_alerted_price_usd": 4537.0,
+      "latest_preferred_offers": [
+        {
+          "airline": "British Airways",
+          "preferred": "British Airways",
+          "price_usd": 4765.0,
+          "stops": 1
+        }
+      ],
       "lowest_ever_usd": 4537.0,
       "observations": [
         {
@@ -45,6 +178,13 @@
           "provider": "searchapi",
           "stops": 1,
           "timestamp": "2026-11-24T02:58:14.364116+00:00"
+        },
+        {
+          "airline": "Etihad",
+          "price_usd": 4537.0,
+          "provider": "searchapi",
+          "stops": 1,
+          "timestamp": "2026-11-24T03:05:51.913135+00:00"
         }
       ],
       "origin": "JFK",
@@ -55,6 +195,14 @@
       "departure_date": "2027-06-17",
       "destination": "NBO",
       "last_alerted_price_usd": 4224.0,
+      "latest_preferred_offers": [
+        {
+          "airline": "British Airways",
+          "preferred": "British Airways",
+          "price_usd": 5722.0,
+          "stops": 1
+        }
+      ],
       "lowest_ever_usd": 4224.0,
       "observations": [
         {
@@ -70,6 +218,13 @@
           "provider": "searchapi",
           "stops": 1,
           "timestamp": "2026-11-24T02:58:14.364116+00:00"
+        },
+        {
+          "airline": "Qatar Airways",
+          "price_usd": 4224.0,
+          "provider": "searchapi",
+          "stops": 1,
+          "timestamp": "2026-11-24T03:05:51.913135+00:00"
         }
       ],
       "origin": "JFK",
@@ -80,6 +235,20 @@
       "departure_date": "2027-06-17",
       "destination": "NBO",
       "last_alerted_price_usd": 4601.0,
+      "latest_preferred_offers": [
+        {
+          "airline": "British Airways",
+          "preferred": "British Airways",
+          "price_usd": 5454.0,
+          "stops": 1
+        },
+        {
+          "airline": "American / British Airways",
+          "preferred": "American",
+          "price_usd": 6297.0,
+          "stops": 1
+        }
+      ],
       "lowest_ever_usd": 4601.0,
       "observations": [
         {
@@ -95,6 +264,13 @@
           "provider": "searchapi",
           "stops": 1,
           "timestamp": "2026-11-24T02:58:14.364116+00:00"
+        },
+        {
+          "airline": "Qatar Airways",
+          "price_usd": 4601.0,
+          "provider": "searchapi",
+          "stops": 1,
+          "timestamp": "2026-11-24T03:05:51.913135+00:00"
         }
       ],
       "origin": "JFK",
