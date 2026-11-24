@@ -1,0 +1,50 @@
+name: Daily Business Class Flight Monitor
+
+on:
+  schedule:
+    # Runs daily at 13:00 UTC (8:00 AM EST / 5:00 AM PST)
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run flight price monitor
+        env:
+          FLIGHT_PROVIDER: ${{ vars.FLIGHT_PROVIDER }}
+          AMADEUS_ENV: ${{ vars.AMADEUS_ENV }}
+          AMADEUS_CLIENT_ID: ${{ secrets.AMADEUS_CLIENT_ID }}
+          AMADEUS_CLIENT_SECRET: ${{ secrets.AMADEUS_CLIENT_SECRET }}
+          SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+        run: python -m src.main
+
+      - name: Commit updated price history and report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/price_history.json data/latest_report.md
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update daily flight price history"
+            git push
+          fi

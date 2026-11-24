@@ -1,0 +1,45 @@
+# Flight Price Monitor Configuration
+# Monitoring Business Class fares from USA to Kenya for June 2027
+
+origins:
+  - JFK  # New York JFK
+  - EWR  # Newark
+  - IAD  # Washington Dulles
+  - BOS  # Boston
+  - ORD  # Chicago O'Hare
+  - ATL  # Atlanta
+  - DFW  # Dallas/Fort Worth
+  - IAH  # Houston
+  - LAX  # Los Angeles
+  - SFO  # San Francisco
+
+destinations:
+  - NBO  # Nairobi, Kenya (Primary international hub)
+  # - MBA  # Mombasa, Kenya (Uncomment to also track Mombasa; doubles API calls)
+
+# Representative June 2027 departure dates (early, mid, late June)
+departure_dates:
+  - "2027-06-03"
+  - "2027-06-10"
+  - "2027-06-17"
+
+# Trip lengths in days (10-18 day range)
+trip_lengths_days:
+  - 11
+  - 16
+
+cabin: BUSINESS
+currency: USD
+adults: 1
+
+# Alert thresholds
+target_max_price_usd: 3500.0
+drop_threshold_pct: 25.0
+min_realert_drop_usd: 50.0  # Only re-alert on same route/dates if price drops another $50+
+
+# Notification settings
+send_daily_summary: true
+send_instant_alerts: true
+
+# API rate limiting
+request_delay_seconds: 0.25
