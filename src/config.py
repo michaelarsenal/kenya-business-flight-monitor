@@ -18,6 +18,7 @@ class SearchQuery:
     cabin: str = "BUSINESS"
     currency: str = "USD"
     adults: int = 1
+    nonstop_only: bool = False
 
     @property
     def route_key(self) -> str:
@@ -33,6 +34,7 @@ class MonitorConfig:
     cabin: str
     currency: str
     adults: int
+    nonstop_only: bool
     target_max_price_usd: float
     drop_threshold_pct: float
     min_realert_drop_usd: float
@@ -58,6 +60,7 @@ class MonitorConfig:
                                 cabin=self.cabin.strip().upper(),
                                 currency=self.currency.strip().upper(),
                                 adults=self.adults,
+                                nonstop_only=self.nonstop_only,
                             )
                         )
         return queries
@@ -76,6 +79,7 @@ def load_config(path: str | Path = "config.yaml") -> MonitorConfig:
         cabin=str(raw.get("cabin", "BUSINESS")),
         currency=str(raw.get("currency", "USD")),
         adults=int(raw.get("adults", 1)),
+        nonstop_only=bool(raw.get("nonstop_only", False)),
         target_max_price_usd=float(raw.get("target_max_price_usd", 3500.0)),
         drop_threshold_pct=float(raw.get("drop_threshold_pct", 25.0)),
         min_realert_drop_usd=float(raw.get("min_realert_drop_usd", 50.0)),

@@ -91,6 +91,8 @@ class AmadeusProvider(FlightProvider):
             "currencyCode": query.currency,
             "max": 5,
         }
+        if query.nonstop_only:
+            params["nonStop"] = "true"
 
         for attempt in range(3):
             token = self._ensure_token()
@@ -174,6 +176,8 @@ class SerpApiProvider(FlightProvider):
             "hl": "en",
             "api_key": self.api_key,
         }
+        if query.nonstop_only:
+            params["stops"] = 1  # 1 = Nonstop only in SerpApi Google Flights
         resp = self._session.get("https://serpapi.com/search.json", params=params, timeout=30)
         resp.raise_for_status()
         data = resp.json()
@@ -227,6 +231,8 @@ class SearchApiProvider(FlightProvider):
             "hl": "en",
             "api_key": self.api_key,
         }
+        if query.nonstop_only:
+            params["stops"] = "nonstop"
         resp = self._session.get("https://www.searchapi.io/api/v1/search", params=params, timeout=30)
         resp.raise_for_status()
         data = resp.json()
@@ -268,13 +274,17 @@ class MockProvider(FlightProvider):
         digest = int(hashlib.sha256(query.route_key.encode()).hexdigest()[:8], 16)
         base_price = 3850.0 + (digest % 1600)
 
-        # Simulate a strong deal on JFK 2027-06-10 11-day trip
-        if self.simulate_deal and query.origin == "JFK" and query.departure_date == "2027-06-10" and query.trip_length_days == 11:
+        # Simulate a strong deal on JFK 2027-06-08 11-day trip
+        if self.simulate_deal and query.origin == "JFK" and query.departure_date in {"2027-06-08", "2027-06-10"} and query.trip_length_days == 11:
             base_price = 3190.0
 
-        airlines = ["Qatar Airways", "Kenya Airways", "British Airways", "KLM", "Lufthansa", "Turkish Airlines"]
-        airline = airlines[digest % len(airlines)]
-        stops = 1 if (digest % 3 != 0) else 2
+        if query.nonstop_only:
+            airline = "Kenya Airways"
+            stops = 0
+        else:
+            airlines = ["Qatar Airways", "Kenya Airways", "British Airways", "KLM", "Lufthansa", "Turkish Airlines"]
+            airline = airlines[digest % len(airlines)]
+            stops = 1 if (digest % 3 != 0) else 2
 
         return FlightOffer(
             origin=query.origin,

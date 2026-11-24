@@ -15,6 +15,7 @@ def _make_config() -> MonitorConfig:
         cabin="BUSINESS",
         currency="USD",
         adults=1,
+        nonstop_only=True,
         target_max_price_usd=3500.0,
         drop_threshold_pct=25.0,
         min_realert_drop_usd=50.0,
