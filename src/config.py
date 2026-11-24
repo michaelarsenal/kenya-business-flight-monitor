@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import List, Optional
@@ -20,6 +20,7 @@ class SearchQuery:
     adults: int = 1
     nonstop_only: bool = False
     max_stops: Optional[int] = None
+    preferred_airlines: List[str] = field(default_factory=list)
 
     @property
     def route_key(self) -> str:
@@ -43,6 +44,7 @@ class MonitorConfig:
     send_daily_summary: bool
     send_instant_alerts: bool
     request_delay_seconds: float
+    preferred_airlines: List[str] = field(default_factory=list)
 
     def build_queries(self) -> List[SearchQuery]:
         queries: List[SearchQuery] = []
@@ -64,6 +66,7 @@ class MonitorConfig:
                                 adults=self.adults,
                                 nonstop_only=self.nonstop_only,
                                 max_stops=self.max_stops,
+                                preferred_airlines=list(self.preferred_airlines),
                             )
                         )
         return queries
@@ -93,4 +96,5 @@ def load_config(path: str | Path = "config.yaml") -> MonitorConfig:
         send_daily_summary=bool(raw.get("send_daily_summary", True)),
         send_instant_alerts=bool(raw.get("send_instant_alerts", True)),
         request_delay_seconds=float(raw.get("request_delay_seconds", 0.25)),
+        preferred_airlines=[str(a) for a in raw.get("preferred_airlines", [])],
     )

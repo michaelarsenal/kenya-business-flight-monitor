@@ -4,8 +4,8 @@ import hashlib
 import os
 import time
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from typing import Optional
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional
 
 import requests
 
@@ -24,10 +24,41 @@ class FlightOffer:
     stops: int
     provider: str
     booking_url: str = ""
+    preferred_offers: List[Dict[str, Any]] = field(default_factory=list)
 
     @property
     def route_key(self) -> str:
         return f"{self.origin}-{self.destination}-{self.departure_date}-{self.return_date}"
+
+
+def _extract_preferred_offers(
+    priced_candidates: List[Dict[str, Any]],
+    preferred_airlines: List[str],
+) -> List[Dict[str, Any]]:
+    results: List[Dict[str, Any]] = []
+    for pref in preferred_airlines:
+        pref_lower = pref.strip().lower()
+        if not pref_lower:
+            continue
+        matching = []
+        for cand in priced_candidates:
+            legs = cand.get("flights", [])
+            leg_airlines = [str(f.get("airline", "")) for f in legs if f.get("airline")]
+            if any(pref_lower in a.lower() for a in leg_airlines):
+                matching.append((cand, leg_airlines))
+        if not matching:
+            continue
+        best_cand, best_airlines = min(matching, key=lambda x: float(x[0]["price"]))
+        unique_airlines = list(dict.fromkeys(best_airlines))
+        results.append(
+            {
+                "preferred": pref,
+                "airline": " / ".join(unique_airlines) if unique_airlines else pref,
+                "price_usd": round(float(best_cand["price"]), 2),
+                "stops": max(0, len(best_cand.get("flights", [])) - 1),
+            }
+        )
+    return results
 
 
 class FlightProvider(ABC):
@@ -212,6 +243,7 @@ class SerpApiProvider(FlightProvider):
             stops=stops,
             provider=self.name,
             booking_url=booking_url,
+            preferred_offers=_extract_preferred_offers(priced, query.preferred_airlines),
         )
 
 
@@ -275,6 +307,7 @@ class SearchApiProvider(FlightProvider):
             stops=stops,
             provider=self.name,
             booking_url=booking_url,
+            preferred_offers=_extract_preferred_offers(priced, query.preferred_airlines),
         )
 
 
@@ -305,6 +338,17 @@ class MockProvider(FlightProvider):
             else:
                 stops = 1 if (digest % 3 != 0) else 2
 
+        pref_offers: List[Dict[str, Any]] = []
+        for idx, pref in enumerate(query.preferred_airlines):
+            pref_offers.append(
+                {
+                    "preferred": pref,
+                    "airline": pref,
+                    "price_usd": round(base_price + 450.0 + (idx * 220.0), 2),
+                    "stops": 1,
+                }
+            )
+
         return FlightOffer(
             origin=query.origin,
             destination=query.destination,
@@ -319,6 +363,7 @@ class MockProvider(FlightProvider):
                 f"https://www.google.com/travel/flights?q=Flights%20to%20{query.destination}"
                 f"%20from%20{query.origin}%20on%20{query.departure_date}%20through%20{query.return_date}"
             ),
+            preferred_offers=pref_offers,
         )
 
 

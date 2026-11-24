@@ -2,12 +2,13 @@
 # Monitoring Business Class fares from USA to Kenya for June 2027
 
 origins:
-  - JFK  # New York JFK (only US airport with nonstop service to Kenya)
+  - JFK  # New York JFK
+  - IAD  # Washington Dulles
 
 destinations:
   - NBO  # Nairobi, Kenya
 
-# Representative June 2027 departure dates (4 queries/day = ~25 days on SearchApi 100 free requests)
+# Representative June 2027 departure dates (8 queries/day with JFK + IAD)
 departure_dates:
   - "2027-06-08"
   - "2027-06-17"
@@ -22,6 +23,9 @@ currency: USD
 adults: 1
 nonstop_only: false
 max_stops: 1  # 0 = nonstop only, 1 = nonstop + 1-stop, null = any
+preferred_airlines:
+  - British Airways
+  - American
 
 # Alert thresholds
 target_max_price_usd: 3500.0

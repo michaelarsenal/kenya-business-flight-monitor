@@ -73,6 +73,28 @@ def build_summary_markdown(
             f"${item.lowest_ever_usd:,.0f} |"
         )
 
+    if config.preferred_airlines:
+        pref_rows = []
+        for item in sorted_items:
+            o = item.offer
+            for po in o.preferred_offers:
+                pref_rows.append((o, po))
+        if pref_rows:
+            lines.extend(
+                [
+                    "",
+                    f"## Preferred Airlines ({', '.join(config.preferred_airlines)})",
+                    "",
+                    "| Route | Dates | Days | Airline | Stops | Price |",
+                    "|---|---|---:|---|---:|---:|",
+                ]
+            )
+            for o, po in sorted(pref_rows, key=lambda x: x[1]["price_usd"]):
+                lines.append(
+                    f"| {o.origin}->{o.destination} | {o.departure_date} to {o.return_date} | "
+                    f"{o.trip_length_days} | {po['airline']} | {po['stops']} | **${po['price_usd']:,.0f}** |"
+                )
+
     if errors:
         lines.extend(["", "## Errors", ""])
         for err in errors[:10]:
@@ -108,6 +130,36 @@ def _build_summary_html(
             f"</tr>"
         )
 
+    pref_section_html = ""
+    if config.preferred_airlines:
+        pref_rows_html = []
+        pref_items = []
+        for item in sorted_items:
+            for po in item.offer.preferred_offers:
+                pref_items.append((item.offer, po))
+        for o, po in sorted(pref_items, key=lambda x: x[1]["price_usd"]):
+            link = f'<a href="{o.booking_url}">Search</a>' if o.booking_url else "—"
+            pref_rows_html.append(
+                f"<tr>"
+                f"<td>{o.origin} &rarr; {o.destination}</td>"
+                f"<td>{o.departure_date} to {o.return_date} ({o.trip_length_days}d)</td>"
+                f"<td>{po['airline']}</td>"
+                f"<td style='text-align:center'>{po['stops']}</td>"
+                f"<td style='text-align:right'><b>${po['price_usd']:,.0f}</b></td>"
+                f"<td>{link}</td>"
+                f"</tr>"
+            )
+        if pref_rows_html:
+            pref_section_html = f"""
+            <h3 style="margin-top: 20px;">Preferred Airlines ({", ".join(config.preferred_airlines)})</h3>
+            <table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; font-size: 13px;">
+              <thead style="background-color: #f3f4f6;">
+                <tr><th>Route</th><th>Dates</th><th>Airline</th><th>Stops</th><th>Price</th><th>Link</th></tr>
+              </thead>
+              <tbody>{"".join(pref_rows_html)}</tbody>
+            </table>
+            """
+
     return f"""
     <html>
     <body style="font-family: Arial, sans-serif; color: #222;">
@@ -129,6 +181,7 @@ def _build_summary_html(
           {"".join(rows_html)}
         </tbody>
       </table>
+      {pref_section_html}
     </body>
     </html>
     """

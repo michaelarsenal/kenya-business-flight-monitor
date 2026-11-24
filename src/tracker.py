@@ -133,6 +133,7 @@ def evaluate_and_update(
         )
         entry["observations"] = obs[-90:]
         entry["lowest_ever_usd"] = lowest_ever
+        entry["latest_preferred_offers"] = offer.preferred_offers
         if should_alert:
             entry["last_alerted_price_usd"] = offer.price_usd
 

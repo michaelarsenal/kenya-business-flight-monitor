@@ -64,6 +64,7 @@ def generate_dashboard_html(
                 "in_budget": in_budget,
                 "is_drop": is_drop,
                 "history": [{"t": o["timestamp"][:10], "p": o["price_usd"]} for o in obs[-30:]],
+                "preferred_offers": entry.get("latest_preferred_offers", []),
                 "url": gf_url,
             }
         )
@@ -78,6 +79,7 @@ def generate_dashboard_html(
             "target_max_price_usd": config.target_max_price_usd,
             "drop_threshold_pct": config.drop_threshold_pct,
             "nonstop_only": config.nonstop_only,
+            "preferred_airlines": config.preferred_airlines,
             "rows": rows,
         }
     )
@@ -146,7 +148,8 @@ def generate_dashboard_html(
       <canvas id="trendChart" height="220"></canvas>
     </div>
 
-    <div class="card" style="overflow-x: auto;">
+    <div class="card" style="overflow-x: auto; margin-bottom: 20px;">
+      <div class="kpi-label" style="margin-bottom: 10px;">Cheapest Fares by Route &amp; Date</div>
       <table>
         <thead>
           <tr>
@@ -156,6 +159,19 @@ def generate_dashboard_html(
           </tr>
         </thead>
         <tbody id="rowsBody"></tbody>
+      </table>
+    </div>
+
+    <div class="card" id="prefCard" style="overflow-x: auto; display: none;">
+      <div class="kpi-label" style="margin-bottom: 10px;">British Airways &amp; American Airlines Options</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Route</th><th>Departure</th><th>Return</th><th class="num">Days</th>
+            <th>Airline</th><th class="num">Stops</th><th class="num">Price</th><th>Book</th>
+          </tr>
+        </thead>
+        <tbody id="prefBody"></tbody>
       </table>
     </div>
   </div>
@@ -190,6 +206,32 @@ def generate_dashboard_html(
         <td><a href="${{r.url}}" target="_blank" rel="noopener">Google Flights</a></td>
       `;
       tbody.appendChild(tr);
+    }}
+
+    const prefBody = document.getElementById("prefBody");
+    const prefRows = [];
+    for (const r of DATA.rows) {{
+      for (const po of (r.preferred_offers || [])) {{
+        prefRows.push({{ ...r, po }});
+      }}
+    }}
+    prefRows.sort((a, b) => a.po.price_usd - b.po.price_usd);
+    if (prefRows.length > 0) {{
+      document.getElementById("prefCard").style.display = "block";
+      for (const item of prefRows) {{
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><b>${{item.route}}</b></td>
+          <td>${{item.departure_date}}</td>
+          <td>${{item.return_date}}</td>
+          <td class="num">${{item.trip_length_days}}</td>
+          <td>${{item.po.airline}}</td>
+          <td class="num">${{item.po.stops}}</td>
+          <td class="num"><b>$${{item.po.price_usd.toLocaleString()}}</b></td>
+          <td><a href="${{item.url}}" target="_blank" rel="noopener">Google Flights</a></td>
+        `;
+        prefBody.appendChild(tr);
+      }}
     }}
 
     // Simple Canvas line chart
