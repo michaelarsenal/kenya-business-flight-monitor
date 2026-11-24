@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>USA → Kenya Business Class Monitor (June 2027)</title>
+  <style>
+    :root {
+      --bg: #0b1120; --card: #111827; --border: #1f2937;
+      --text: #f3f4f6; --muted: #9ca3af; --accent: #14b8a6;
+      --good: #10b981; --warn: #f59e0b; --bad: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.5;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    h1 { margin: 0 0 4px; font-size: 24px; }
+    .sub { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+    .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 20px; }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px;
+    }
+    .kpi-label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .kpi-val { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
+    th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    .badge {
+      display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    }
+    .badge-good { background: rgba(16,185,129,0.15); color: var(--good); }
+    .badge-warn { background: rgba(245,158,11,0.15); color: var(--warn); }
+    .badge-muted { background: rgba(156,163,175,0.15); color: var(--muted); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    canvas { width: 100%; height: 220px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>USA → Kenya Business Class Price Monitor</h1>
+    <div class="sub">June 2027 · Nonstop Only: True · Last Updated: 2026-11-24T02:43:47.831946+00:00</div>
+
+    <div class="kpis">
+      <div class="card"><div class="kpi-label">Active Queries</div><div class="kpi-val">4 / day</div></div>
+      <div class="card"><div class="kpi-label">Best Fare Found</div><div class="kpi-val">Pending</div></div>
+      <div class="card"><div class="kpi-label">Target Budget</div><div class="kpi-val">&le; $3,500</div></div>
+      <div class="card"><div class="kpi-label">Active Deals</div><div class="kpi-val">0</div></div>
+    </div>
+
+    <div class="card" style="margin-bottom: 20px;">
+      <div class="kpi-label" style="margin-bottom: 10px;">Price Trend (Last 30 Checks)</div>
+      <canvas id="trendChart" height="220"></canvas>
+    </div>
+
+    <div class="card" style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Route</th><th>Departure</th><th>Return</th><th class="num">Days</th>
+            <th>Airline</th><th class="num">Latest</th><th class="num">Change</th>
+            <th class="num">Lowest Ever</th><th>Status</th><th>Book</th>
+          </tr>
+        </thead>
+        <tbody id="rowsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const DATA = {"last_run_utc": "2026-11-24T02:43:47.831946+00:00", "target_max_price_usd": 3500.0, "drop_threshold_pct": 25.0, "nonstop_only": true, "rows": [{"route": "JFK \u2192 NBO", "route_key": "JFK-NBO-2027-06-08-2027-06-19", "departure_date": "2027-06-08", "return_date": "2027-06-19", "trip_length_days": 11, "airline": "Pending first run", "stops": "\u2014", "latest_price": null, "prev_price": null, "lowest_ever": null, "change_pct": null, "in_budget": false, "is_drop": false, "history": [], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20JFK%20on%202027-06-08%20through%202027-06-19%20business%20class"}, {"route": "JFK \u2192 NBO", "route_key": "JFK-NBO-2027-06-08-2027-06-24", "departure_date": "2027-06-08", "return_date": "2027-06-24", "trip_length_days": 16, "airline": "Pending first run", "stops": "\u2014", "latest_price": null, "prev_price": null, "lowest_ever": null, "change_pct": null, "in_budget": false, "is_drop": false, "history": [], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20JFK%20on%202027-06-08%20through%202027-06-24%20business%20class"}, {"route": "JFK \u2192 NBO", "route_key": "JFK-NBO-2027-06-17-2027-06-28", "departure_date": "2027-06-17", "return_date": "2027-06-28", "trip_length_days": 11, "airline": "Pending first run", "stops": "\u2014", "latest_price": null, "prev_price": null, "lowest_ever": null, "change_pct": null, "in_budget": false, "is_drop": false, "history": [], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20JFK%20on%202027-06-17%20through%202027-06-28%20business%20class"}, {"route": "JFK \u2192 NBO", "route_key": "JFK-NBO-2027-06-17-2027-07-03", "departure_date": "2027-06-17", "return_date": "2027-07-03", "trip_length_days": 16, "airline": "Pending first run", "stops": "\u2014", "latest_price": null, "prev_price": null, "lowest_ever": null, "change_pct": null, "in_budget": false, "is_drop": false, "history": [], "url": "https://www.google.com/travel/flights?q=Flights%20to%20NBO%20from%20JFK%20on%202027-06-17%20through%202027-07-03%20business%20class"}]};
+    const tbody = document.getElementById("rowsBody");
+    const sorted = [...DATA.rows].sort((a, b) => (a.latest_price ?? 999999) - (b.latest_price ?? 999999));
+
+    for (const r of sorted) {
+      const tr = document.createElement("tr");
+      const price = r.latest_price !== null ? `$${r.latest_price.toLocaleString()}` : "Pending";
+      const lowest = r.lowest_ever !== null ? `$${r.lowest_ever.toLocaleString()}` : "—";
+      let changeStr = "—";
+      if (r.change_pct !== null) {
+        changeStr = r.change_pct > 0 ? `+${r.change_pct}%` : `${r.change_pct}%`;
+      }
+      let status = `<span class="badge badge-muted">Tracking</span>`;
+      if (r.in_budget) status = `<span class="badge badge-good">In Budget</span>`;
+      else if (r.is_drop) status = `<span class="badge badge-warn">25%+ Drop</span>`;
+
+      tr.innerHTML = `
+        <td><b>${r.route}</b></td>
+        <td>${r.departure_date}</td>
+        <td>${r.return_date}</td>
+        <td class="num">${r.trip_length_days}</td>
+        <td>${r.airline}</td>
+        <td class="num"><b>${price}</b></td>
+        <td class="num">${changeStr}</td>
+        <td class="num">${lowest}</td>
+        <td>${status}</td>
+        <td><a href="${r.url}" target="_blank" rel="noopener">Google Flights</a></td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    // Simple Canvas line chart
+    const canvas = document.getElementById("trendChart");
+    const ctx = canvas.getContext("2d");
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = canvas.clientWidth * dpr;
+    canvas.height = 220 * dpr;
+    ctx.scale(dpr, dpr);
+    const W = canvas.clientWidth, H = 220, pad = 40;
+    const allPts = DATA.rows.flatMap(r => r.history.map(h => h.p));
+    if (allPts.length === 0) {
+      ctx.fillStyle = "#9ca3af";
+      ctx.font = "13px sans-serif";
+      ctx.fillText("No price history recorded yet. Run the GitHub Action to populate live prices.", pad, H / 2);
+    } else {
+      const minP = Math.min(...allPts, DATA.target_max_price_usd) * 0.92;
+      const maxP = Math.max(...allPts, DATA.target_max_price_usd) * 1.05;
+      const yFor = p => H - pad - ((p - minP) / (maxP - minP || 1)) * (H - 2 * pad);
+
+      // Target budget dashed line
+      ctx.strokeStyle = "#10b981";
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      ctx.moveTo(pad, yFor(DATA.target_max_price_usd));
+      ctx.lineTo(W - pad, yFor(DATA.target_max_price_usd));
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = "#10b981";
+      ctx.font = "11px sans-serif";
+      ctx.fillText(`Target $${DATA.target_max_price_usd.toLocaleString()}`, pad + 4, yFor(DATA.target_max_price_usd) - 6);
+
+      const colors = ["#14b8a6", "#3b82f6", "#f59e0b", "#a855f7"];
+      DATA.rows.forEach((r, idx) => {
+        if (!r.history.length) return;
+        ctx.strokeStyle = colors[idx % colors.length];
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        r.history.forEach((pt, i) => {
+          const x = pad + (i / Math.max(1, r.history.length - 1)) * (W - 2 * pad);
+          const y = yFor(pt.p);
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+      });
+    }
+  </script>
+</body>
+</html>

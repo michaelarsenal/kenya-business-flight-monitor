@@ -6,6 +6,7 @@ import time
 from typing import List
 
 from src.config import load_config
+from src.dashboard import generate_dashboard_html
 from src.notifier import dispatch_notifications
 from src.providers import FlightOffer, get_provider
 from src.tracker import evaluate_and_update, load_history, save_history
@@ -21,6 +22,9 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--report", default="data/latest_report.md", help="Path to latest markdown report"
+    )
+    parser.add_argument(
+        "--dashboard", default="docs/index.html", help="Path to generated HTML dashboard"
     )
     parser.add_argument(
         "--provider",
@@ -60,6 +64,7 @@ def main(argv: List[str] | None = None) -> int:
     history = load_history(args.history)
     evaluated = evaluate_and_update(offers, history, config)
     save_history(args.history, history)
+    generate_dashboard_html(history, config, evaluated=evaluated, output_path=args.dashboard)
 
     dispatch_notifications(
         evaluated=evaluated,
