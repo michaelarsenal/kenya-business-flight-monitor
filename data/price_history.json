@@ -1,0 +1,77 @@
+{
+  "last_run_utc": "2026-11-24T02:46:02.735685+00:00",
+  "routes": {
+    "JFK-NBO-2027-06-08-2027-06-19": {
+      "departure_date": "2027-06-08",
+      "destination": "NBO",
+      "last_alerted_price_usd": null,
+      "lowest_ever_usd": 6370.0,
+      "observations": [
+        {
+          "airline": "Kenya Airways",
+          "price_usd": 6370.0,
+          "provider": "searchapi",
+          "stops": 0,
+          "timestamp": "2026-11-24T02:46:02.735685+00:00"
+        }
+      ],
+      "origin": "JFK",
+      "return_date": "2027-06-19",
+      "trip_length_days": 11
+    },
+    "JFK-NBO-2027-06-08-2027-06-24": {
+      "departure_date": "2027-06-08",
+      "destination": "NBO",
+      "last_alerted_price_usd": null,
+      "lowest_ever_usd": 7370.0,
+      "observations": [
+        {
+          "airline": "Kenya Airways",
+          "price_usd": 7370.0,
+          "provider": "searchapi",
+          "stops": 0,
+          "timestamp": "2026-11-24T02:46:02.735685+00:00"
+        }
+      ],
+      "origin": "JFK",
+      "return_date": "2027-06-24",
+      "trip_length_days": 16
+    },
+    "JFK-NBO-2027-06-17-2027-06-28": {
+      "departure_date": "2027-06-17",
+      "destination": "NBO",
+      "last_alerted_price_usd": null,
+      "lowest_ever_usd": 8870.0,
+      "observations": [
+        {
+          "airline": "Kenya Airways",
+          "price_usd": 8870.0,
+          "provider": "searchapi",
+          "stops": 0,
+          "timestamp": "2026-11-24T02:46:02.735685+00:00"
+        }
+      ],
+      "origin": "JFK",
+      "return_date": "2027-06-28",
+      "trip_length_days": 11
+    },
+    "JFK-NBO-2027-06-17-2027-07-03": {
+      "departure_date": "2027-06-17",
+      "destination": "NBO",
+      "last_alerted_price_usd": null,
+      "lowest_ever_usd": 9870.0,
+      "observations": [
+        {
+          "airline": "Kenya Airways",
+          "price_usd": 9870.0,
+          "provider": "searchapi",
+          "stops": 0,
+          "timestamp": "2026-11-24T02:46:02.735685+00:00"
+        }
+      ],
+      "origin": "JFK",
+      "return_date": "2027-07-03",
+      "trip_length_days": 16
+    }
+  }
+}
