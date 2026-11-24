@@ -168,8 +168,8 @@ def _build_alert_bodies(alerts: List[EvaluatedOffer]) -> tuple[str, str]:
 
 
 def send_smtp_email(subject: str, text_body: str, html_body: str) -> None:
-    smtp_host = os.environ.get("SMTP_HOST", "smtp.gmail.com")
-    smtp_port = int(os.environ.get("SMTP_PORT", "587"))
+    smtp_host = os.environ.get("SMTP_HOST") or "smtp.gmail.com"
+    smtp_port = int(os.environ.get("SMTP_PORT") or "587")
     smtp_user = os.environ.get("SMTP_USER", "")
     smtp_pass = os.environ.get("SMTP_PASSWORD", "")
     email_to = os.environ.get("ALERT_EMAIL_TO", smtp_user)
