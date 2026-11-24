@@ -1,4 +1,4 @@
-# USA -> Kenya Business Class Daily Summary (2026-11-24 03:05 UTC)
+# USA -> Kenya Business Class Daily Summary (2026-11-24 03:21 UTC)
 
 - **Routes checked:** 8 (Errors: 0)
 - **Target budget:** <= $3,500 USD
@@ -15,10 +15,10 @@
 | JFK->NBO | 2027-06-08 to 2027-06-24 | 16 | Etihad | 1 | **$4,537** | $4,537 | 0.0% | $4,537 |
 | JFK->NBO | 2027-06-08 to 2027-06-19 | 11 | Qatar Airways | 1 | **$4,601** | $4,601 | 0.0% | $4,601 |
 | JFK->NBO | 2027-06-17 to 2027-07-03 | 16 | Qatar Airways | 1 | **$4,601** | $4,601 | 0.0% | $4,601 |
-| IAD->NBO | 2027-06-08 to 2027-06-19 | 11 | Air France | 1 | **$4,909** | — | New | $4,909 |
-| IAD->NBO | 2027-06-08 to 2027-06-24 | 16 | British Airways | 1 | **$4,972** | — | New | $4,972 |
-| IAD->NBO | 2027-06-17 to 2027-06-28 | 11 | Brussels Airlines | 1 | **$5,046** | — | New | $5,046 |
-| IAD->NBO | 2027-06-17 to 2027-07-03 | 16 | Emirates | 1 | **$5,600** | — | New | $5,600 |
+| IAD->NBO | 2027-06-08 to 2027-06-19 | 11 | Air France | 1 | **$4,909** | $4,909 | 0.0% | $4,909 |
+| IAD->NBO | 2027-06-08 to 2027-06-24 | 16 | British Airways | 1 | **$4,972** | $4,972 | 0.0% | $4,972 |
+| IAD->NBO | 2027-06-17 to 2027-06-28 | 11 | Brussels Airlines | 1 | **$5,046** | $5,046 | 0.0% | $5,046 |
+| IAD->NBO | 2027-06-17 to 2027-07-03 | 16 | Emirates | 1 | **$5,600** | $5,600 | 0.0% | $5,600 |
 
 ## Preferred Airlines (British Airways, American)
 
@@ -31,6 +31,5 @@
 | IAD->NBO | 2027-06-08 to 2027-06-19 | 11 | British Airways | 1 | **$5,662** |
 | IAD->NBO | 2027-06-17 to 2027-07-03 | 16 | British Airways | 1 | **$5,662** |
 | JFK->NBO | 2027-06-17 to 2027-06-28 | 11 | British Airways | 1 | **$5,722** |
-| JFK->NBO | 2027-06-08 to 2027-06-19 | 11 | American / British Airways | 1 | **$6,297** |
 | JFK->NBO | 2027-06-17 to 2027-07-03 | 16 | American / British Airways | 1 | **$6,297** |
-| IAD->NBO | 2027-06-17 to 2027-06-28 | 11 | British Airways | 1 | **$6,528** |
+| IAD->NBO | 2027-06-17 to 2027-06-28 | 11 | British Airways | 1 | **$6,739** |
