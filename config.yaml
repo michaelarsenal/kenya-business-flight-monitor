@@ -7,12 +7,10 @@ origins:
 destinations:
   - NBO  # Nairobi, Kenya
 
-# Representative June 2027 departure dates (8 queries/day = ~240/month, fits SerpApi free tier)
+# Representative June 2027 departure dates (4 queries/day = ~25 days on SearchApi 100 free requests)
 departure_dates:
-  - "2027-06-03"
   - "2027-06-08"
-  - "2027-06-14"
-  - "2027-06-19"
+  - "2027-06-17"
 
 # Trip lengths in days (10-18 day range)
 trip_lengths_days:
