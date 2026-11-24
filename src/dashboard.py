@@ -84,6 +84,10 @@ def generate_dashboard_html(
 
     best_str = f"${best_price:,.0f}" if best_price is not None else "Pending"
 
+    stop_label = "Nonstop only" if config.nonstop_only else (
+        f"Up to {config.max_stops} stop(s)" if config.max_stops is not None else "Any stops"
+    )
+
     page = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -128,7 +132,7 @@ def generate_dashboard_html(
 <body>
   <div class="container">
     <h1>USA → Kenya Business Class Price Monitor</h1>
-    <div class="sub">June 2027 · Nonstop Only: {html.escape(str(config.nonstop_only))} · Last Updated: {html.escape(last_run)}</div>
+    <div class="sub">June 2027 · {html.escape(stop_label)} · Last Updated: {html.escape(last_run)}</div>
 
     <div class="kpis">
       <div class="card"><div class="kpi-label">Active Queries</div><div class="kpi-val">{len(rows)} / day</div></div>

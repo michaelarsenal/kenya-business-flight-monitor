@@ -20,7 +20,8 @@ trip_lengths_days:
 cabin: BUSINESS
 currency: USD
 adults: 1
-nonstop_only: true
+nonstop_only: false
+max_stops: 1  # 0 = nonstop only, 1 = nonstop + 1-stop, null = any
 
 # Alert thresholds
 target_max_price_usd: 3500.0

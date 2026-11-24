@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 import yaml
 
@@ -19,6 +19,7 @@ class SearchQuery:
     currency: str = "USD"
     adults: int = 1
     nonstop_only: bool = False
+    max_stops: Optional[int] = None
 
     @property
     def route_key(self) -> str:
@@ -35,6 +36,7 @@ class MonitorConfig:
     currency: str
     adults: int
     nonstop_only: bool
+    max_stops: Optional[int]
     target_max_price_usd: float
     drop_threshold_pct: float
     min_realert_drop_usd: float
@@ -61,6 +63,7 @@ class MonitorConfig:
                                 currency=self.currency.strip().upper(),
                                 adults=self.adults,
                                 nonstop_only=self.nonstop_only,
+                                max_stops=self.max_stops,
                             )
                         )
         return queries
@@ -71,6 +74,9 @@ def load_config(path: str | Path = "config.yaml") -> MonitorConfig:
     with cfg_path.open("r", encoding="utf-8") as f:
         raw = yaml.safe_load(f)
 
+    raw_max_stops = raw.get("max_stops")
+    max_stops = int(raw_max_stops) if raw_max_stops is not None else None
+
     return MonitorConfig(
         origins=list(raw["origins"]),
         destinations=list(raw["destinations"]),
@@ -80,6 +86,7 @@ def load_config(path: str | Path = "config.yaml") -> MonitorConfig:
         currency=str(raw.get("currency", "USD")),
         adults=int(raw.get("adults", 1)),
         nonstop_only=bool(raw.get("nonstop_only", False)),
+        max_stops=max_stops,
         target_max_price_usd=float(raw.get("target_max_price_usd", 3500.0)),
         drop_threshold_pct=float(raw.get("drop_threshold_pct", 25.0)),
         min_realert_drop_usd=float(raw.get("min_realert_drop_usd", 50.0)),

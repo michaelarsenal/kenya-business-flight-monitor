@@ -178,12 +178,20 @@ class SerpApiProvider(FlightProvider):
         }
         if query.nonstop_only:
             params["stops"] = 1  # 1 = Nonstop only in SerpApi Google Flights
+        elif query.max_stops == 1:
+            params["stops"] = 2  # 2 = 1 stop or fewer
+        elif query.max_stops == 2:
+            params["stops"] = 3  # 3 = 2 stops or fewer
         resp = self._session.get("https://serpapi.com/search.json", params=params, timeout=30)
         resp.raise_for_status()
         data = resp.json()
 
         candidates = data.get("best_flights", []) + data.get("other_flights", [])
         priced = [c for c in candidates if isinstance(c.get("price"), (int, float))]
+        if query.max_stops is not None:
+            priced = [
+                c for c in priced if max(0, len(c.get("flights", [])) - 1) <= query.max_stops
+            ]
         if not priced:
             return None
 
@@ -233,12 +241,20 @@ class SearchApiProvider(FlightProvider):
         }
         if query.nonstop_only:
             params["stops"] = "nonstop"
+        elif query.max_stops == 1:
+            params["stops"] = "one_stop_or_fewer"
+        elif query.max_stops == 2:
+            params["stops"] = "two_stops_or_fewer"
         resp = self._session.get("https://www.searchapi.io/api/v1/search", params=params, timeout=30)
         resp.raise_for_status()
         data = resp.json()
 
         candidates = data.get("best_flights", []) + data.get("other_flights", [])
         priced = [c for c in candidates if isinstance(c.get("price"), (int, float))]
+        if query.max_stops is not None:
+            priced = [
+                c for c in priced if max(0, len(c.get("flights", [])) - 1) <= query.max_stops
+            ]
         if not priced:
             return None
 
@@ -284,7 +300,10 @@ class MockProvider(FlightProvider):
         else:
             airlines = ["Qatar Airways", "Kenya Airways", "British Airways", "KLM", "Lufthansa", "Turkish Airlines"]
             airline = airlines[digest % len(airlines)]
-            stops = 1 if (digest % 3 != 0) else 2
+            if query.max_stops == 1:
+                stops = 0 if airline == "Kenya Airways" else 1
+            else:
+                stops = 1 if (digest % 3 != 0) else 2
 
         return FlightOffer(
             origin=query.origin,
