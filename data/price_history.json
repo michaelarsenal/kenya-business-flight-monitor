@@ -1,11 +1,11 @@
 {
-  "last_run_utc": "2026-11-24T02:46:02.735685+00:00",
+  "last_run_utc": "2026-11-24T02:58:14.364116+00:00",
   "routes": {
     "JFK-NBO-2027-06-08-2027-06-19": {
       "departure_date": "2027-06-08",
       "destination": "NBO",
-      "last_alerted_price_usd": null,
-      "lowest_ever_usd": 6370.0,
+      "last_alerted_price_usd": 4601.0,
+      "lowest_ever_usd": 4601.0,
       "observations": [
         {
           "airline": "Kenya Airways",
@@ -13,6 +13,13 @@
           "provider": "searchapi",
           "stops": 0,
           "timestamp": "2026-11-24T02:46:02.735685+00:00"
+        },
+        {
+          "airline": "Qatar Airways",
+          "price_usd": 4601.0,
+          "provider": "searchapi",
+          "stops": 1,
+          "timestamp": "2026-11-24T02:58:14.364116+00:00"
         }
       ],
       "origin": "JFK",
@@ -22,8 +29,8 @@
     "JFK-NBO-2027-06-08-2027-06-24": {
       "departure_date": "2027-06-08",
       "destination": "NBO",
-      "last_alerted_price_usd": null,
-      "lowest_ever_usd": 7370.0,
+      "last_alerted_price_usd": 4537.0,
+      "lowest_ever_usd": 4537.0,
       "observations": [
         {
           "airline": "Kenya Airways",
@@ -31,6 +38,13 @@
           "provider": "searchapi",
           "stops": 0,
           "timestamp": "2026-11-24T02:46:02.735685+00:00"
+        },
+        {
+          "airline": "Etihad",
+          "price_usd": 4537.0,
+          "provider": "searchapi",
+          "stops": 1,
+          "timestamp": "2026-11-24T02:58:14.364116+00:00"
         }
       ],
       "origin": "JFK",
@@ -40,8 +54,8 @@
     "JFK-NBO-2027-06-17-2027-06-28": {
       "departure_date": "2027-06-17",
       "destination": "NBO",
-      "last_alerted_price_usd": null,
-      "lowest_ever_usd": 8870.0,
+      "last_alerted_price_usd": 4224.0,
+      "lowest_ever_usd": 4224.0,
       "observations": [
         {
           "airline": "Kenya Airways",
@@ -49,6 +63,13 @@
           "provider": "searchapi",
           "stops": 0,
           "timestamp": "2026-11-24T02:46:02.735685+00:00"
+        },
+        {
+          "airline": "Qatar Airways",
+          "price_usd": 4224.0,
+          "provider": "searchapi",
+          "stops": 1,
+          "timestamp": "2026-11-24T02:58:14.364116+00:00"
         }
       ],
       "origin": "JFK",
@@ -58,8 +79,8 @@
     "JFK-NBO-2027-06-17-2027-07-03": {
       "departure_date": "2027-06-17",
       "destination": "NBO",
-      "last_alerted_price_usd": null,
-      "lowest_ever_usd": 9870.0,
+      "last_alerted_price_usd": 4601.0,
+      "lowest_ever_usd": 4601.0,
       "observations": [
         {
           "airline": "Kenya Airways",
@@ -67,6 +88,13 @@
           "provider": "searchapi",
           "stops": 0,
           "timestamp": "2026-11-24T02:46:02.735685+00:00"
+        },
+        {
+          "airline": "Qatar Airways",
+          "price_usd": 4601.0,
+          "provider": "searchapi",
+          "stops": 1,
+          "timestamp": "2026-11-24T02:58:14.364116+00:00"
         }
       ],
       "origin": "JFK",
