@@ -15,13 +15,14 @@ Automated daily monitor for **Business Class** flights from major **US departure
 ## Setup Instructions (GitHub Actions)
 
 ### 1. Get a Flight Pricing API Key
-Choose **one** of the following providers:
-- **Amadeus Self-Service API (Recommended, free tier)**:
-  1. Sign up at [developers.amadeus.com](https://developers.amadeus.com/).
-  2. Create an app to get `AMADEUS_CLIENT_ID` and `AMADEUS_CLIENT_SECRET`.
-  3. Note: New apps start in the `test` environment; set GitHub Variable `AMADEUS_ENV=test` for testing or switch to `production` when approved for live fares.
-- **SerpApi (Google Flights API)**:
+*(Note: Amadeus decommissioned its Self-Service portal in July 2026 and is now Enterprise-only.)*
+
+Choose **one** of these self-serve Google Flights APIs:
+- **SerpApi (Recommended — Free tier: 250 searches/month)**:
   1. Sign up at [serpapi.com](https://serpapi.com/) and copy your `SERPAPI_API_KEY`.
+  2. **Quota tip:** To stay within the free 250 searches/month (~8 searches/day), trim `config.yaml` to 4 US hubs (e.g., `JFK`, `IAD`, `ORD`, `LAX`), 2 `departure_dates`, and 1 `trip_lengths_days` (`4 * 2 * 1 = 8/day = ~240/month`).
+- **SearchApi (Free tier: 100 requests, no card required)**:
+  1. Sign up at [searchapi.io](https://www.searchapi.io/) and copy your `SEARCHAPI_API_KEY`.
 
 ### 2. Get an Email App Password (for Gmail)
 1. Enable 2-Step Verification on your Google account.
@@ -32,16 +33,15 @@ Go to your repository **Settings → Secrets and variables → Actions → New r
 
 | Secret Name | Required | Example / Description |
 |---|---|---|
-| `AMADEUS_CLIENT_ID` | If using Amadeus | Your Amadeus API Key |
-| `AMADEUS_CLIENT_SECRET` | If using Amadeus | Your Amadeus API Secret |
-| `SERPAPI_API_KEY` | If using SerpApi | Your SerpApi Key |
+| `SERPAPI_API_KEY` | If using SerpApi | Your SerpApi API Key |
+| `SEARCHAPI_API_KEY` | If using SearchApi | Your SearchApi API Key |
 | `SMTP_USER` | Yes | `yourname@gmail.com` |
 | `SMTP_PASSWORD` | Yes | 16-character Gmail App Password |
 | `ALERT_EMAIL_TO` | Yes | Recipient email(s), comma-separated |
 | `SMTP_HOST` | Optional | Defaults to `smtp.gmail.com` |
 | `SMTP_PORT` | Optional | Defaults to `587` |
 
-*(Optional)* Under **Variables**, set `AMADEUS_ENV` to `test` if using Amadeus sandbox credentials, or `FLIGHT_PROVIDER` to `amadeus` / `serpapi`.
+*(Optional)* Under **Variables**, set `FLIGHT_PROVIDER` to `serpapi` or `searchapi` (auto-detected from whichever secret is set).
 
 ### 4. Customize Routes or Thresholds
 Edit `config.yaml` to adjust:

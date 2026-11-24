@@ -203,6 +203,59 @@ class SerpApiProvider(FlightProvider):
         )
 
 
+class SearchApiProvider(FlightProvider):
+    name = "searchapi"
+
+    def __init__(self, api_key: Optional[str] = None) -> None:
+        self.api_key = api_key or os.environ.get("SEARCHAPI_API_KEY", "")
+        if not self.api_key:
+            raise ValueError(
+                "SEARCHAPI_API_KEY environment variable is required for SearchApiProvider."
+            )
+        self._session = requests.Session()
+
+    def search_lowest_offer(self, query: SearchQuery) -> Optional[FlightOffer]:
+        params = {
+            "engine": "google_flights",
+            "departure_id": query.origin,
+            "arrival_id": query.destination,
+            "outbound_date": query.departure_date,
+            "return_date": query.return_date,
+            "travel_class": "business",
+            "adults": query.adults,
+            "currency": query.currency,
+            "hl": "en",
+            "api_key": self.api_key,
+        }
+        resp = self._session.get("https://www.searchapi.io/api/v1/search", params=params, timeout=30)
+        resp.raise_for_status()
+        data = resp.json()
+
+        candidates = data.get("best_flights", []) + data.get("other_flights", [])
+        priced = [c for c in candidates if isinstance(c.get("price"), (int, float))]
+        if not priced:
+            return None
+
+        best = min(priced, key=lambda c: float(c["price"]))
+        flights = best.get("flights", [])
+        airline = flights[0].get("airline", "Unknown") if flights else "Unknown"
+        stops = max(0, len(flights) - 1)
+        booking_url = data.get("search_metadata", {}).get("google_flights_url", "")
+
+        return FlightOffer(
+            origin=query.origin,
+            destination=query.destination,
+            departure_date=query.departure_date,
+            return_date=query.return_date,
+            trip_length_days=query.trip_length_days,
+            price_usd=round(float(best["price"]), 2),
+            airline=airline,
+            stops=stops,
+            provider=self.name,
+            booking_url=booking_url,
+        )
+
+
 class MockProvider(FlightProvider):
     """Deterministic mock provider for testing and dry-runs without API credentials."""
 
@@ -243,17 +296,21 @@ class MockProvider(FlightProvider):
 def get_provider(provider_name: Optional[str] = None) -> FlightProvider:
     name = (provider_name or os.environ.get("FLIGHT_PROVIDER", "")).strip().lower()
     if not name:
-        if os.environ.get("AMADEUS_CLIENT_ID") and os.environ.get("AMADEUS_CLIENT_SECRET"):
-            name = "amadeus"
-        elif os.environ.get("SERPAPI_API_KEY"):
+        if os.environ.get("SERPAPI_API_KEY"):
             name = "serpapi"
+        elif os.environ.get("SEARCHAPI_API_KEY"):
+            name = "searchapi"
+        elif os.environ.get("AMADEUS_CLIENT_ID") and os.environ.get("AMADEUS_CLIENT_SECRET"):
+            name = "amadeus"
         else:
             name = "mock"
 
-    if name == "amadeus":
-        return AmadeusProvider()
     if name == "serpapi":
         return SerpApiProvider()
+    if name == "searchapi":
+        return SearchApiProvider()
+    if name == "amadeus":
+        return AmadeusProvider()
     if name == "mock":
         return MockProvider()
     raise ValueError(f"Unsupported flight provider: {name}")

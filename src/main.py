@@ -25,7 +25,7 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--provider",
         default=None,
-        choices=["amadeus", "serpapi", "mock"],
+        choices=["serpapi", "searchapi", "amadeus", "mock"],
         help="Override flight API provider (default: auto-detect from env, else mock)",
     )
     parser.add_argument(
